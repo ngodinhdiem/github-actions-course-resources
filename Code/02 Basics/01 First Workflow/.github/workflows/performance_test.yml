@@ -1,0 +1,20 @@
+name: First Workflow
+on: workflow_dispatch
+jobs:
+  performance-attempt:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Install Locust
+        run: pip3 install locust
+      - name: Validate Locust version
+        run: locust -V
+      - name: Install JWT
+        run: pip3 install PyJWT
+      - name: Install Pandas
+        run: pip3 install pandas
+      - name: Run simple test
+        run: |
+          locust -f simple_locustfile.py -u 4 -r 2 -t 30s --headless --master
+          locust -f simple_locustfile.py --worker --headless
